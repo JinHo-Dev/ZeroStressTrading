@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model trades {
+  tradeId      String    @id @unique(map: "id_UNIQUE") @db.VarChar(45) @map("trade_id")
+  tradeName    String?   @db.VarChar(45) @map("trade_name")
+  createDate   DateTime? @db.Timestamp(0) @map("create_date")
+  updateDate   DateTime? @db.Timestamp(0) @map("update_date")
+  complete_Date DateTime? @db.Timestamp(0) @map("complete_date")
+  isComplete   Boolean? @map("is_complete")
+  isCancel     Boolean? @map("is_cancel")
+  sellerId     String?   @db.VarChar(45) @map("seller_id")
+  buyerId      String?   @db.VarChar(45) @map("buyer_id")
+  itemId       String?   @db.VarChar(45) @map("item_id")
+  detail        Json? @map("detail")
+  minPrice     Int? @map("min_price")
+  maxPrice     Int? @map("max_price")
+  currentPrice Int? @map("current_price")
+  priceUnit    String?   @db.VarChar(45) @map("price_unit")
+}
