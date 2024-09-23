@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { ActionFunctionArgs, redirect } from "@remix-run/node";
 import { Form } from "@remix-run/react";
+import NavigationBar from "~/components/NavigationBar";
 import { db } from "~/db.server";
 
 export async function action({ request }: ActionFunctionArgs) {
@@ -17,7 +18,7 @@ export async function action({ request }: ActionFunctionArgs) {
     // 트레이드 이름 규칙 화이트리스트
     data.tradeName = data.tradeName?.replaceAll(
       /[^0-9a-zA-Zㄱ-ㅎ가-힣 ()~#\^+*,._\-]/gi,
-      ""
+      "",
     );
 
     // tradeId 띄어쓰기 제거
@@ -49,19 +50,37 @@ export async function action({ request }: ActionFunctionArgs) {
     await db.trades.create({
       data: data,
     });
-    return redirect(`/trade/${data.tradeId}`);
+    const createdTradeUrl = encodeURI(`/trade/${data.tradeId as string}`);
+    return redirect(createdTradeUrl);
   }
 }
 
 export default function Reveal() {
   return (
-    <Form method="post">
-      <input type="button" value="add Photos" />
-      <input type="text" name="tradeName" placeholder="tradeName" />
-      <input type="text" name="minPrice" placeholder="minPrice" />
-      <input type="text" name="priceUnit" placeholder="priceUnit" />
-      <input type="button" value="set Details" />
-      <button type="submit">Create</button>
-    </Form>
+    <>
+      <NavigationBar title="Create Trade" backTitle="toMainPage" backUrl=".." />
+      <Form method="post">
+        <ul>
+          <li>
+            <input type="button" value="add Photos" />
+          </li>
+          <li>
+            <input type="text" name="tradeName" placeholder="tradeName" />
+          </li>
+          <li>
+            <input type="text" name="minPrice" placeholder="minPrice" />
+          </li>
+          <li>
+            <input type="text" name="priceUnit" placeholder="priceUnit" />
+          </li>
+          <li>
+            <input type="button" value="set Details" />
+          </li>
+          <li>
+            <button type="submit">Create</button>
+          </li>
+        </ul>
+      </Form>
+    </>
   );
 }

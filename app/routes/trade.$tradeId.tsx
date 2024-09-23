@@ -1,5 +1,6 @@
 import { LoaderFunctionArgs } from "@remix-run/node";
-import { json, Link, useLoaderData } from "@remix-run/react";
+import { json, useLoaderData } from "@remix-run/react";
+import NavigationBar from "~/components/NavigationBar";
 import { db } from "~/db.server";
 
 export async function loader({ params }: LoaderFunctionArgs) {
@@ -21,9 +22,11 @@ export default function Trade() {
   if (!isAvailable) {
     return (
       <>
-        <Link to="../trade" className="backBtn">
-          Return to List
-        </Link>
+        <NavigationBar
+          title="Create Trade"
+          backTitle="toMainPage"
+          backUrl=".."
+        />
         <h1>No Item Available</h1>
       </>
     );
@@ -31,15 +34,29 @@ export default function Trade() {
 
   return (
     <>
-      <Link to="../trade" className="backBtn">
-        Return to List
-      </Link>
+      <NavigationBar
+        title={tradeItem.tradeName || "-"}
+        backTitle="toTradeList"
+        backUrl=".."
+      />
       <h1>{tradeItem.tradeName}</h1>
-      <div>tradeId: {tradeItem.tradeId}</div>
-      <div>itemId: {tradeItem.itemId}</div>
-      <div>sellerId: {tradeItem.sellerId}</div>
-      <div>createDate: {tradeItem.createDate}</div>
-      <div>currentPrice: {tradeItem.currentPrice}</div>
+      <ul>
+        <li>
+          <div>tradeId: {tradeItem.tradeId}</div>
+        </li>
+        <li>
+          <div>itemId: {tradeItem.itemId}</div>
+        </li>
+        <li>
+          <div>sellerId: {tradeItem.sellerId}</div>
+        </li>
+        <li>
+          <div>createDate: {tradeItem.createDate}</div>
+        </li>
+        <li>
+          <div>currentPrice: {tradeItem.currentPrice}</div>
+        </li>
+      </ul>
     </>
   );
 }
