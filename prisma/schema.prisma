@@ -12,7 +12,7 @@ model trades {
   tradeName    String?   @db.VarChar(45) @map("trade_name")
   createDate   DateTime? @db.Timestamp(0) @map("create_date")
   updateDate   DateTime? @db.Timestamp(0) @map("update_date")
-  complete_Date DateTime? @db.Timestamp(0) @map("complete_date")
+  completeDate DateTime? @db.Timestamp(0) @map("complete_date")
   isComplete   Boolean? @map("is_complete")
   isCancel     Boolean? @map("is_cancel")
   sellerId     String?   @db.VarChar(45) @map("seller_id")
