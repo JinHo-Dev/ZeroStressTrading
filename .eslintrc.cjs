@@ -55,6 +55,22 @@ module.exports = {
       },
     },
 
+    // React-Hooks
+    {
+      files: ["**/*.{js,jsx,ts,tsx}"],
+      plugins: ["react-hooks"],
+      rules: {
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": [
+          "warn",
+          {
+            additionalHooks:
+              "(useRecoilCallback|useRecoilTransaction_UNSTABLE)",
+          },
+        ],
+      },
+    },
+
     // Typescript
     {
       files: ["**/*.{ts,tsx}"],
