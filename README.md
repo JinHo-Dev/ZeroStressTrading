@@ -1,40 +1,61 @@
-# Welcome to Remix!
+# 소개
 
-- 📖 [Remix docs](https://remix.run/docs)
+ZeroStressTrading은 중고거래를 하면서 발생하는 스트레스를 줄여줍니다!
 
-## Development
+```
+어떻게?
 
-Run the dev server:
-
-```shellscript
-npm run dev
+1. GPT4o를 통해 상품에 대한 예상되는 질문을 미리 생성하여, 상품 판매자의 즉각적인 답변을 필요로 하지 않는다.
+2. 경매 형식의 거래를 통해 가격 설정에 대한 귀찮음을 줄여준다.
 ```
 
-## Deployment
+# 요구사항
 
-First, build your app for production:
+1. Node 18 이상
+2. MySQL 서버
 
-```sh
-npm run build
+# 설치 및 실행
+
+1. npm i
+2. npm update
+3. setup mysql server
+
+```
+TABLE: trades (utf8mb4 - utf8mb4_general_ci) {
+    trade_id: varchar(45) unique,
+    trade_name: varchar(45),
+    create_date: timestamp(0),
+    update_date: timestamp(0),
+    complete_date: timestamp(0),
+    is_complete: tinyint(1),
+    is_cancel: tinyint(1),
+    seller_id: varchar(45),
+    buyer_id: varchar(45),
+    item_id: varchar(45),
+    detail: json,
+    min_price: number,
+    max_price: number,
+    current_price: number,
+    price_unit: varchar(45)
+}
 ```
 
-Then run the app in production mode:
+4. make a ".env" file like this;
 
-```sh
-npm start
+```
+DATABASE_URL = mysql://id:pw@host:port/db
 ```
 
-Now you'll need to pick a host to deploy it to.
+5. npm run setup
+6. npm start
 
-### DIY
+# 사용 프레임워크/라이브러리
 
-If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
+- Remix
+- TailwindCSS
+- MySQL
+- Prisma
 
-Make sure to deploy the output of `npm run build`
+# Known Issue
 
-- `build/server`
-- `build/client`
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever css framework you prefer. See the [Vite docs on css](https://vitejs.dev/guide/features.html#css) for more information.
+- 한글 이름으로 등록 시, TypeError 발생
