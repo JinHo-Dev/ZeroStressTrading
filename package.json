@@ -16,12 +16,14 @@
     "@remix-run/node": "^2.12.0",
     "@remix-run/react": "^2.12.0",
     "@remix-run/serve": "^2.12.0",
+    "argon2": "^0.41.1",
     "axios": "^1.7.7",
     "isbot": "^4.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "recoil": "^0.7.7",
-    "remix-auth": "^3.7.0"
+    "remix-auth": "^3.7.0",
+    "remix-auth-form": "^1.5.0"
   },
   "devDependencies": {
     "@remix-run/dev": "^2.12.0",
