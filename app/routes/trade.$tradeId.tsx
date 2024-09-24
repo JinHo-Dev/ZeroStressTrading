@@ -1,22 +1,46 @@
-import { LoaderFunctionArgs } from "@remix-run/node";
-import { json, useLoaderData } from "@remix-run/react";
+import { Prisma } from "@prisma/client";
+import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
+import { Form, json, redirect, useLoaderData } from "@remix-run/react";
 import NavigationBar from "~/components/NavigationBar";
 import { db } from "~/db.server";
+import { authenticator } from "~/services/auth.server";
 
-export async function loader({ params }: LoaderFunctionArgs) {
+export async function loader({ request, params }: LoaderFunctionArgs) {
   const tradeItem = await db.trades.findUnique({
     where: {
       tradeId: params.tradeId,
     },
   });
 
+  let user = await authenticator.isAuthenticated(request);
+
   return json({
     tradeItem,
+    user,
   });
 }
 
+export async function action({ request }: ActionFunctionArgs) {
+  const body = await request.formData();
+  let data: Prisma.biddingsCreateInput;
+
+  if (request.method === "POST") {
+    data = {
+      biddingPrice: Number(body.get("biddingPrice") as string),
+      tradeId: body.get("tradeName") as string,
+      biddingDate: new Date(),
+    };
+
+    await db.biddings.create({
+      data: data,
+    });
+
+    return redirect(".");
+  }
+}
+
 export default function Trade() {
-  const { tradeItem } = useLoaderData<typeof loader>();
+  const { tradeItem, user } = useLoaderData<typeof loader>();
   const isAvailable = tradeItem && tradeItem.tradeId;
 
   if (!isAvailable) {
@@ -49,6 +73,15 @@ export default function Trade() {
           <div>currentPrice: {tradeItem.currentPrice}</div>
         </li>
       </ul>
+      {tradeItem.sellerId !== user ? (
+        <Form method="post">
+          <input type="number" name="biddingPrice" required />
+          {tradeItem.priceUnit}
+          <button>Bid</button>
+        </Form>
+      ) : (
+        <></>
+      )}
     </>
   );
 }

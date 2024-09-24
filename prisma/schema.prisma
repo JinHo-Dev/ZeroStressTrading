@@ -29,3 +29,12 @@ model users {
   userId String  @id @unique(map: "id_UNIQUE") @map("user_id") @db.VarChar(100)
   pw     String? @map("pw") @db.VarChar(100)
 }
+
+model biddings {
+  userId       String?   @map("user_id") @db.VarChar(100)
+  biddingDate  DateTime? @map("bidding_date") @db.Timestamp(0)
+  tradeId      String?   @map("trade_id") @db.VarChar(45)
+  biddingPrice Int?      @map("bidding_price")
+  biddingId    Int       @unique(map: "biddings_un") @default(autoincrement()) @map("bidding_id")
+  isCancel     Boolean?  @map("is_cancel")
+}

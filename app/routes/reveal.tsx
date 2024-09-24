@@ -1,8 +1,20 @@
 import { Prisma } from "@prisma/client";
-import { ActionFunctionArgs, redirect } from "@remix-run/node";
-import { Form } from "@remix-run/react";
+import {
+  ActionFunctionArgs,
+  LoaderFunctionArgs,
+  redirect,
+} from "@remix-run/node";
+import { Form, json } from "@remix-run/react";
 import NavigationBar from "~/components/NavigationBar";
 import { db } from "~/db.server";
+import { authenticator } from "~/services/auth.server";
+
+export async function loader({ request }: LoaderFunctionArgs) {
+  if (!(await authenticator.isAuthenticated(request))) {
+    return redirect("../hello");
+  }
+  return json({});
+}
 
 export async function action({ request }: ActionFunctionArgs) {
   const body = await request.formData();
@@ -13,6 +25,7 @@ export async function action({ request }: ActionFunctionArgs) {
       tradeName: body.get("tradeName") as string,
       tradeId: body.get("tradeName") as string,
       createDate: new Date(),
+      sellerId: await authenticator.isAuthenticated(request),
     };
 
     // 트레이드 이름 규칙 화이트리스트
