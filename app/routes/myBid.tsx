@@ -3,11 +3,12 @@ import { useLoaderData } from "@remix-run/react";
 import NavigationBar from "~/components/NavigationBar";
 import { db } from "~/db.server";
 import BiddingItem from "~/interfaces/biddingItem";
+import { authenticator } from "~/services/auth.server";
 
-export async function loader({ params }: LoaderFunctionArgs) {
+export async function loader({ params, request }: LoaderFunctionArgs) {
   const biddingList = await db.biddings.findMany({
     where: {
-      userId: params.userId,
+      userId: await authenticator.isAuthenticated(request),
     },
   });
 
