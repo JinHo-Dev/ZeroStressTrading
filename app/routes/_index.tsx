@@ -19,6 +19,18 @@ export default function Index() {
         <Link to={`/reveal`}>
           <li>Create a New Trade</li>
         </Link>
+        <Link to={`/`}>
+          <li>I made this Trades</li>
+        </Link>
+        <Link to={`/myBid`}>
+          <li>I bid this Trades</li>
+        </Link>
+        <Link to={`/`}>
+          <li>Completed Trades</li>
+        </Link>
+        <Link to={`/`}>
+          <li>Edit My Profile</li>
+        </Link>
       </ul>
     </>
   );
