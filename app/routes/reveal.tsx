@@ -58,7 +58,7 @@ export async function action({ request }: ActionFunctionArgs) {
 export default function Reveal() {
   return (
     <>
-      <NavigationBar title="Create Trade" backTitle="toMainPage" backUrl=".." />
+      <NavigationBar title="Create Trade" backUrl=".." />
       <Form method="post">
         <ul>
           <li>

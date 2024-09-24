@@ -21,6 +21,7 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "resolveJsonModule": true,

@@ -12,6 +12,7 @@
     "setup": "prisma generate && prisma migrate deploy"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.3",
     "@prisma/client": "^5.19.1",
     "@remix-run/node": "^2.12.0",
     "@remix-run/react": "^2.12.0",

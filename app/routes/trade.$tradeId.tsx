@@ -22,11 +22,7 @@ export default function Trade() {
   if (!isAvailable) {
     return (
       <>
-        <NavigationBar
-          title="Create Trade"
-          backTitle="toMainPage"
-          backUrl=".."
-        />
+        <NavigationBar title="Create Trade" backUrl=".." />
         <h1>No Item Available</h1>
       </>
     );
@@ -34,11 +30,7 @@ export default function Trade() {
 
   return (
     <>
-      <NavigationBar
-        title={tradeItem.tradeName || "-"}
-        backTitle="toTradeList"
-        backUrl=".."
-      />
+      <NavigationBar title={tradeItem.tradeName || "-"} backUrl=".." />
       <h1>{tradeItem.tradeName}</h1>
       <ul>
         <li>

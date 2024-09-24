@@ -29,14 +29,3 @@ input {
   border-width: 1px;
   border-radius: 4px;
 }
-
-.NavigationBar {
-  display: flex;
-  height: 50px;
-  font-size: 18px;
-  line-height: 50px;
-  border-bottom: solid 1px #eee;
-  & > * {
-    flex: 1;
-  }
-}
