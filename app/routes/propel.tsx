@@ -1,3 +1,3 @@
-export default function Welcome() {
+export default function Propel() {
   return <>Propel Page</>;
 }
