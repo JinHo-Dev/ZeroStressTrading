@@ -49,13 +49,19 @@ DATABASE_URL = mysql://id:pw@host:port/db
 5. npm run setup
 6. npm start
 
-# 사용 프레임워크/라이브러리
+
+0. npx prisma db pull (get from db)
+0. npx prisma generate (prisma-client update)
+
+
+# 사용 라이브러리
 
 - Remix
+- Remix Auth / Remix Auth Form
 - TailwindCSS
 - MySQL
-- Prisma
+- Prisma / Prisma Client
+- Argon2
+- Emotion
+- Recoil
 
-# Known Issue
-
-- 한글 이름으로 등록 시, TypeError 발생
