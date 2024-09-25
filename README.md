@@ -17,42 +17,16 @@ ZeroStressTrading은 중고거래를 하면서 발생하는 스트레스를 줄�
 # 설치 및 실행
 
 1. npm i
-2. npm update
-3. setup mysql server
-
-```
-TABLE: trades (utf8mb4 - utf8mb4_general_ci) {
-    trade_id: varchar(45) unique,
-    trade_name: varchar(45),
-    create_date: timestamp(0),
-    update_date: timestamp(0),
-    complete_date: timestamp(0),
-    is_complete: tinyint(1),
-    is_cancel: tinyint(1),
-    seller_id: varchar(45),
-    buyer_id: varchar(45),
-    item_id: varchar(45),
-    detail: json,
-    min_price: number,
-    max_price: number,
-    current_price: number,
-    price_unit: varchar(45)
-}
-```
-
-4. make a ".env" file like this;
+2. make a ".env" file
 
 ```
 DATABASE_URL = mysql://id:pw@host:port/db
 ```
 
-5. npm run setup
+3. npx prisma db push
+4. npx prisma generate
+5. npm run build
 6. npm start
-
-
-0. npx prisma db pull (get from db)
-0. npx prisma generate (prisma-client update)
-
 
 # 사용 라이브러리
 
@@ -64,4 +38,3 @@ DATABASE_URL = mysql://id:pw@host:port/db
 - Argon2
 - Emotion
 - Recoil
-
