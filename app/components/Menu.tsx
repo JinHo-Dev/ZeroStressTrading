@@ -80,6 +80,7 @@ export default function Menu({ backUrl, children }: Props) {
           left: 0;
           width: 100%;
           height: 100%;
+          z-index: 1;
           -webkit-user-drag: none;
           user-select: none;
           -moz-user-select: none;
