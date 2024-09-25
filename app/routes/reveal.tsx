@@ -1,3 +1,4 @@
+import { css, keyframes } from "@emotion/react";
 import { Prisma } from "@prisma/client";
 import {
   ActionFunctionArgs,
@@ -5,12 +6,15 @@ import {
   redirect,
 } from "@remix-run/node";
 import { Form, json } from "@remix-run/react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { fileURLToPath } from "url";
 import backButtonState from "~/atoms/backButtonState";
 import NavigationBar from "~/components/NavigationBar";
 import { db } from "~/db.server";
 import { authenticator } from "~/services/auth.server";
+import "swiper/css";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   if (!(await authenticator.isAuthenticated(request))) {
@@ -75,16 +79,114 @@ export default function Reveal() {
   const [isBackButton, setIsBackButton] = useRecoilState(backButtonState);
 
   useEffect(() => {
-    setIsBackButton(true);
+    setIsBackButton(false);
   }, []);
+
+  const fileSelector = useRef<HTMLInputElement>(null);
+
+  const bounce = keyframes`
+    from, 20%, 53%, 80%, to {
+      transform: translate3d(0,0,0);
+    }
+
+    40%, 43% {
+      transform: translate3d(0, -30px, 0);
+    }
+
+    70% {
+      transform: translate3d(0, -15px, 0);
+    }
+
+    90% {
+      transform: translate3d(0,-4px,0);
+    }
+  `;
 
   return (
     <>
-      <Form method="post">
+      <Swiper
+        spaceBetween={50}
+        slidesPerView={3}
+        onSlideChange={() => console.log("slide change")}
+        onSwiper={(swiper) => console.log(swiper)}
+      >
+        <SwiperSlide>Slide 1</SwiperSlide>
+        <SwiperSlide>Slide 2</SwiperSlide>
+        <SwiperSlide>Slide 3</SwiperSlide>
+        <SwiperSlide>Slide 4</SwiperSlide>
+      </Swiper>
+      <Form
+        method="post"
+        css={css`
+          width: 100%;
+          height: 100%;
+        `}
+      >
+        <div
+          css={css`
+            position: relative;
+            width: calc(100% - 40px);
+            margin: 0 20px;
+            background-color: rgba(0, 0, 20, 0.1);
+            border-radius: 10px;
+            height: 100%;
+            overflow: hidden;
+          `}
+        >
+          <input
+            type="button"
+            value="사진 추가"
+            onClick={() => {
+              fileSelector.current?.click();
+            }}
+            css={css`
+              position: absolute;
+              margin-left: -60px;
+              left: 50%;
+              margin-top: -30px;
+              top: 50%;
+              width: 120px;
+              border: none;
+              background-color: rgba(255, 255, 255, 0.4);
+              height: 60px;
+              border-radius: 16px;
+              font-size: 15px;
+              font-weight: bold;
+              cursor: pointer;
+            `}
+          />
+          <input
+            type="file"
+            ref={fileSelector}
+            css={css`
+              display: none;
+            `}
+          />
+          <input
+            type="button"
+            value="다음"
+            css={css`
+              position: absolute;
+              right: 20px;
+              bottom: 20px;
+              width: 80px;
+              border: none;
+              background-color: #8638ea;
+              height: 80px;
+              border-radius: 100%;
+              font-size: 15px;
+              font-weight: bold;
+              color: #fff;
+              cursor: pointer;
+              animation: ${bounce} 1s ease infinite;
+              &:hover {
+                animation: none;
+              }
+            `}
+          />
+        </div>
         <ul>
-          <li>
-            <input type="button" value="add Photos" />
-          </li>
+          <li></li>
           <li>
             <input type="text" name="tradeName" placeholder="tradeName" />
           </li>
