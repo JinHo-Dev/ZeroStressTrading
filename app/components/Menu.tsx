@@ -11,7 +11,9 @@ type Props = {
 };
 
 export default function Menu({ backUrl, children }: Props) {
-  const [isMenuOpen, setIsMenuOpen] = useRecoilState(menuOpenState);
+  const [isMenuOpen, setIsMenuOpen] = useRecoilState<boolean | null>(
+    menuOpenState
+  );
 
   const closeMenu = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     if (event.target === event.currentTarget) {
@@ -72,7 +74,7 @@ export default function Menu({ backUrl, children }: Props) {
       <div
         onClick={closeMenu}
         css={css`
-          display: ${isMenuOpen ? "default" : "default"};
+          display: ${isMenuOpen === null ? "none" : "default"};
           background-color: rgba(0, 0, 20, 0.12);
           backdrop-filter: blur(8px);
           position: absolute;
@@ -92,7 +94,7 @@ export default function Menu({ backUrl, children }: Props) {
       >
         <div
           css={css`
-            display: ${isMenuOpen ? "default" : "default"};
+            display: ${isMenuOpen === null ? "none" : "default"};
             background-color: #fff;
             position: absolute;
             top: 0px;

@@ -1,8 +1,8 @@
 import { atom } from "recoil";
 
-const menuOpenState = atom({
+const menuOpenState = atom<boolean | null>({
   key: "menuOpenState",
-  default: false,
+  default: null,
 });
 
 export default menuOpenState;
