@@ -1,7 +1,4 @@
-import { css, keyframes } from "@emotion/react";
-import tab_home_high from "/tab_home_high.svg";
-import { useRecoilState } from "recoil";
-import currentTabState from "~/atoms/currentTabState";
+import { css } from "@emotion/react";
 import Tab from "./Tab";
 
 export default function TabBar() {
@@ -14,15 +11,20 @@ export default function TabBar() {
           background: #fff;
           display: flex;
           flex-direction: row;
+          -webkit-user-drag: none;
+          user-select: none;
+          -moz-user-select: none;
+          -webkit-user-select: none;
+          -ms-user-select: none;
           & > div {
             flex: 1;
           }
         `}
       >
         <Tab name="Home" to="/" />
-        <Tab name="Trades" to="/trade" />
-        <Tab name="Reveal" to="/reveal" />
-        <Tab name="Homde" to="/" />
+        <Tab name="Buy" to="/trade" />
+        <Tab name="Sell" to="/reveal" />
+        <Tab name="MyList" to="/myList" />
       </div>
     </>
   );
