@@ -1,7 +1,6 @@
 import { css, keyframes } from "@emotion/react";
 import { Link } from "@remix-run/react";
 import React, { ReactNode } from "react";
-import menu from "/menu.svg";
 import close from "/close.svg";
 import { useRecoilState } from "recoil";
 import menuOpenState from "~/atoms/menuOpenState";
@@ -81,6 +80,11 @@ export default function Menu({ backUrl, children }: Props) {
           left: 0;
           width: 100%;
           height: 100%;
+          -webkit-user-drag: none;
+          user-select: none;
+          -moz-user-select: none;
+          -webkit-user-select: none;
+          -ms-user-select: none;
           animation: ${isMenuOpen ? blurring_in : blurring_out} 0.15s ease-out;
         `}
       >

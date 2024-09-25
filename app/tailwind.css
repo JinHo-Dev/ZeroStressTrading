@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 h1 {
-  font-size: 40px;
+  font-size: 36px;
   font-weight: bold;
-  margin: 20px 0 0 20px;
+  margin: 0 0 0 20px;
   cursor: default;
 }
 
@@ -26,4 +26,12 @@ input {
   border-color: #ddd;
   border-width: 1px;
   border-radius: 4px;
+}
+
+img, h1 {
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }

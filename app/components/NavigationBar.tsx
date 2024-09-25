@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { Link, useNavigate } from "@remix-run/react";
+import { useNavigate } from "@remix-run/react";
 import { ReactNode } from "react";
 import menu from "/menu.svg";
 import back from "/back.svg";
@@ -31,6 +31,11 @@ export default function NavigationBar({ children }: Props) {
           display: flex;
           line-height: 60px;
           font-size: 18px;
+          -webkit-user-drag: none;
+          user-select: none;
+          -moz-user-select: none;
+          -webkit-user-select: none;
+          -ms-user-select: none;
           & > * {
             flex: 1;
           }
