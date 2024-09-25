@@ -1,4 +1,4 @@
-import { css, keyframes } from "@emotion/react";
+import { css } from "@emotion/react";
 import tab_home_high from "/tab_home_high.svg";
 import tab_home from "/tab_home.svg";
 import { useRecoilState } from "recoil";

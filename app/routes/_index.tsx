@@ -3,8 +3,6 @@ import { Link } from "@remix-run/react";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import backButtonState from "~/atoms/backButtonState";
-import Menu from "~/components/Menu";
-import NavigationBar from "~/components/NavigationBar";
 
 export const meta: MetaFunction = () => {
   return [
@@ -27,23 +25,8 @@ export default function Index() {
     <>
       <h1>ZST</h1>
       <ul>
-        <Link to={`/trade`}>
-          <li>View Trade List</li>
-        </Link>
-        <Link to={`/reveal`}>
-          <li>Create a New Trade</li>
-        </Link>
         <Link to={`/`}>
-          <li>I made this Trades</li>
-        </Link>
-        <Link to={`/myBid`}>
-          <li>I bid this Trades</li>
-        </Link>
-        <Link to={`/`}>
-          <li>Completed Trades</li>
-        </Link>
-        <Link to={`/`}>
-          <li>Edit My Profile</li>
+          <li>Event</li>
         </Link>
       </ul>
     </>
