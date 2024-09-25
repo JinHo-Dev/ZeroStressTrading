@@ -43,7 +43,7 @@ export default function Menu({ backUrl, children }: Props) {
 
   const blurring_out = keyframes`
     to {
-      display: block;
+      display: none;
       backdrop-filter: blur(0);
       background-color: rgba(0, 0, 20, 0);
     }
@@ -57,7 +57,7 @@ export default function Menu({ backUrl, children }: Props) {
 
   const flying_out = keyframes`
     to {
-      display: block;
+      display: none;
       transform: translate3d(257px, 0, 0);
     }
 
@@ -72,7 +72,7 @@ export default function Menu({ backUrl, children }: Props) {
       <div
         onClick={closeMenu}
         css={css`
-          display: ${isMenuOpen ? "default" : "none"};
+          display: ${isMenuOpen ? "default" : "default"};
           background-color: rgba(0, 0, 20, 0.12);
           backdrop-filter: blur(8px);
           position: absolute;
@@ -87,11 +87,12 @@ export default function Menu({ backUrl, children }: Props) {
           -webkit-user-select: none;
           -ms-user-select: none;
           animation: ${isMenuOpen ? blurring_in : blurring_out} 0.15s ease-out;
+          animation-fill-mode: forwards;
         `}
       >
         <div
           css={css`
-            display: ${isMenuOpen ? "default" : "none"};
+            display: ${isMenuOpen ? "default" : "default"};
             background-color: #fff;
             position: absolute;
             top: 0px;
@@ -100,6 +101,7 @@ export default function Menu({ backUrl, children }: Props) {
             height: 100%;
             box-shadow: -8px 0px 24px rgba(0, 0, 20, 0.08);
             animation: ${isMenuOpen ? flying_in : flying_out} 0.15s ease-out;
+            animation-fill-mode: forwards;
           `}
         >
           <img
