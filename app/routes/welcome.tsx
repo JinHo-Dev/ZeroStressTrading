@@ -26,5 +26,5 @@ export async function action({ request }: ActionFunctionArgs) {
       pw: await argon2.hash(body.get("password") as string),
     },
   });
-  return redirect("hello");
+  return redirect("/hello");
 }
