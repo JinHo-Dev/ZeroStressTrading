@@ -62,8 +62,10 @@ export default function RevealPhoto({ step }: Props) {
           onChange={() => {
             setRevealStep((step || 1) + 1);
             swiper.allowSlideNext = true;
-            swiper.slideNext(1000);
-            swiper.allowSlideNext = false;
+            setTimeout(() => {
+              swiper.slideNext(500);
+              swiper.allowSlideNext = false;
+            }, 300);
           }}
           ref={fileSelector}
           css={css`
