@@ -1,5 +1,7 @@
 import { json, LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import { useRecoilState } from "recoil";
+import backButtonState from "~/atoms/backButtonState";
 import NavigationBar from "~/components/NavigationBar";
 import { db } from "~/db.server";
 import BiddingItem from "~/interfaces/biddingItem";
@@ -19,12 +21,13 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
 
 export default function MyBid() {
   const { biddingList } = useLoaderData<typeof loader>();
+  const [isBackButton, setIsBackButton] = useRecoilState(backButtonState);
+  setIsBackButton(true);
 
   const isAvailable = biddingList && biddingList.length > 0;
 
   return (
     <>
-      <NavigationBar title="Trade List" backUrl=".." />
       <h1>Trade List</h1>
       {isAvailable ? (
         <ul>

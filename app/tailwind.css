@@ -12,9 +12,7 @@ h1 {
 li {
   list-style-type: none;
   width: 100%;
-  border-bottom: solid 1px #eee;
   height: 50px;
-  font-size: 20px;
   line-height: 50px;
   padding-left: 20px;
   transition-duration: 0.1s;

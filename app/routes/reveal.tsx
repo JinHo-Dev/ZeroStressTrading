@@ -5,6 +5,9 @@ import {
   redirect,
 } from "@remix-run/node";
 import { Form, json } from "@remix-run/react";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import backButtonState from "~/atoms/backButtonState";
 import NavigationBar from "~/components/NavigationBar";
 import { db } from "~/db.server";
 import { authenticator } from "~/services/auth.server";
@@ -69,9 +72,14 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export default function Reveal() {
+  const [isBackButton, setIsBackButton] = useRecoilState(backButtonState);
+
+  useEffect(() => {
+    setIsBackButton(true);
+  }, []);
+
   return (
     <>
-      <NavigationBar title="Create Trade" backUrl=".." />
       <Form method="post">
         <ul>
           <li>

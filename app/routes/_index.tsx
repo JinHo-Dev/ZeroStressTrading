@@ -1,17 +1,31 @@
 import type { MetaFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import backButtonState from "~/atoms/backButtonState";
+import Menu from "~/components/Menu";
+import NavigationBar from "~/components/NavigationBar";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
+    { title: "ZST" },
+    {
+      name: "description",
+      content: "Stress-free Trading with ZeroStressTrading",
+    },
   ];
 };
 
 export default function Index() {
+  const [isBackButton, setIsBackButton] = useRecoilState(backButtonState);
+
+  useEffect(() => {
+    setIsBackButton(false);
+  }, []);
+
   return (
     <>
-      <h1>ZeroStressTrading</h1>
+      <h1>ZST</h1>
       <ul>
         <Link to={`/trade`}>
           <li>View Trade List</li>

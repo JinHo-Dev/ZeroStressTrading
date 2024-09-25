@@ -1,7 +1,9 @@
 import { Prisma } from "@prisma/client";
 import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { Form, json, redirect, useLoaderData } from "@remix-run/react";
-import NavigationBar from "~/components/NavigationBar";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import backButtonState from "~/atoms/backButtonState";
 import { db } from "~/db.server";
 import { authenticator } from "~/services/auth.server";
 
@@ -41,12 +43,17 @@ export async function action({ request }: ActionFunctionArgs) {
 
 export default function Trade() {
   const { tradeItem, user } = useLoaderData<typeof loader>();
+  const [isBackButton, setIsBackButton] = useRecoilState(backButtonState);
+
+  useEffect(() => {
+    setIsBackButton(true);
+  }, []);
+
   const isAvailable = tradeItem && tradeItem.tradeId;
 
   if (!isAvailable) {
     return (
       <>
-        <NavigationBar title="Create Trade" backUrl=".." />
         <h1>No Item Available</h1>
       </>
     );
@@ -54,7 +61,6 @@ export default function Trade() {
 
   return (
     <>
-      <NavigationBar title={tradeItem.tradeName || "-"} backUrl=".." />
       <h1>{tradeItem.tradeName}</h1>
       <ul>
         <li>
@@ -75,6 +81,7 @@ export default function Trade() {
       </ul>
       {tradeItem.sellerId !== user ? (
         <Form method="post">
+          <input type="hidden" name="tradeId" value={tradeItem.tradeId} />
           <input type="number" name="biddingPrice" required />
           {tradeItem.priceUnit}
           <button>Bid</button>
