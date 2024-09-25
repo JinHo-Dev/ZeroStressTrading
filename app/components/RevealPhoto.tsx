@@ -15,7 +15,15 @@ export default function RevealPhoto({ step }: Props) {
   const [revealStep, setRevealStep] = useRecoilState(revealStepState);
 
   return (
-    <>
+    <div
+      css={css`
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        z-index: 1;
+      `}
+    >
       <div
         css={css`
           position: relative;
@@ -25,7 +33,6 @@ export default function RevealPhoto({ step }: Props) {
           border-radius: 10px;
           height: 100%;
           overflow: hidden;
-          z-index: 1;
         `}
       >
         <input
@@ -55,7 +62,7 @@ export default function RevealPhoto({ step }: Props) {
           onChange={() => {
             setRevealStep((step || 1) + 1);
             swiper.allowSlideNext = true;
-            swiper.slideNext();
+            swiper.slideNext(1000);
             swiper.allowSlideNext = false;
           }}
           ref={fileSelector}
@@ -64,6 +71,6 @@ export default function RevealPhoto({ step }: Props) {
           `}
         />
       </div>
-    </>
+    </div>
   );
 }
