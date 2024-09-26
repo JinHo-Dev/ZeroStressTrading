@@ -128,8 +128,8 @@ export default function Reveal() {
           slideShadows: true,
         }}
         pagination={{ clickable: false }}
-        onSwiper={(swiper) => console.log(swiper)}
-        onSlideChange={() => console.log("slide change")}
+        onSwiper={(swiper) => {}}
+        onSlideChange={() => {}}
         css={css`
           position: relative;
           width: 100%;
@@ -141,7 +141,7 @@ export default function Reveal() {
           <RevealPhoto step={1} />
         </SwiperSlide>
         <SwiperSlide>
-          <RevealPhoto step={1} />
+          <RevealPhoto step={2} />
         </SwiperSlide>
         <SwiperSlide>
           <RevealPhoto step={3} />
