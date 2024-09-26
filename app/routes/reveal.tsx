@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
 import { fileURLToPath } from "url";
-import backButtonState from "~/atoms/backButtonState";
+import historyStackState from "~/atoms/historyStackState";
 import NavigationBar from "~/components/NavigationBar";
 import { db } from "~/db.server";
 import { authenticator } from "~/services/auth.server";
@@ -83,15 +83,14 @@ export async function action({ request }: ActionFunctionArgs) {
 
 export default function Reveal() {
   const swiper = useRef<SwiperRef>(null);
-  const [isBackButton, setIsBackButton] = useRecoilState(backButtonState);
   const [revealStep, setRevealStep] = useRecoilState(revealStepState);
-
   useEffect(() => {
     setRevealStep(1);
   }, []);
 
+  const [historyStack, setHistoryStack] = useRecoilState(historyStackState);
   useEffect(() => {
-    setIsBackButton(false);
+    setHistoryStack(historyStack + 1);
   }, []);
 
   const fileSelector = useRef<HTMLInputElement>(null);

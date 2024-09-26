@@ -3,7 +3,7 @@ import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { Form, json, redirect, useLoaderData } from "@remix-run/react";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import backButtonState from "~/atoms/backButtonState";
+import historyStackState from "~/atoms/historyStackState";
 import { db } from "~/db.server";
 import { authenticator } from "~/services/auth.server";
 
@@ -43,10 +43,10 @@ export async function action({ request }: ActionFunctionArgs) {
 
 export default function Trade() {
   const { tradeItem, user } = useLoaderData<typeof loader>();
-  const [isBackButton, setIsBackButton] = useRecoilState(backButtonState);
 
+  const [historyStack, setHistoryStack] = useRecoilState(historyStackState);
   useEffect(() => {
-    setIsBackButton(true);
+    setHistoryStack(historyStack + 1);
   }, []);
 
   const isAvailable = tradeItem && tradeItem.tradeId;

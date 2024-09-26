@@ -1,11 +1,11 @@
 import { css } from "@emotion/react";
 import { useNavigate } from "@remix-run/react";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import menu from "/menu.svg";
 import back from "/back.svg";
 import { useRecoilState } from "recoil";
 import menuOpenState from "~/atoms/menuOpenState";
-import backButtonState from "~/atoms/backButtonState";
+import historyStackState from "~/atoms/historyStackState";
 
 type Props = {
   backUrl?: string;
@@ -15,7 +15,11 @@ type Props = {
 export default function NavigationBar({ children }: Props) {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useRecoilState(menuOpenState);
-  const [isBackButton, setIsBackButton] = useRecoilState(backButtonState);
+
+  const [historyStack, setHistoryStack] = useRecoilState(historyStackState);
+  useEffect(() => {
+    setHistoryStack(historyStack + 1);
+  }, []);
 
   const openMenu = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     if (event.target === event.currentTarget) {
@@ -41,11 +45,14 @@ export default function NavigationBar({ children }: Props) {
           }
         `}
       >
-        {isBackButton ? (
+        {historyStack > 1 ? (
           <div>
             <img
               src={back}
-              onClick={() => navigate(-1)}
+              onClick={() => {
+                setHistoryStack(historyStack - 2);
+                navigate(-1);
+              }}
               css={css`
                 padding: 18px;
                 cursor: pointer;

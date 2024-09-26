@@ -2,7 +2,7 @@ import type { MetaFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import backButtonState from "~/atoms/backButtonState";
+import historyStackState from "~/atoms/historyStackState";
 
 export const meta: MetaFunction = () => {
   return [
@@ -15,10 +15,9 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
-  const [isBackButton, setIsBackButton] = useRecoilState(backButtonState);
-
+  const [historyStack, setHistoryStack] = useRecoilState(historyStackState);
   useEffect(() => {
-    setIsBackButton(false);
+    setHistoryStack(historyStack + 1);
   }, []);
 
   return (

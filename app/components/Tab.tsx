@@ -4,6 +4,7 @@ import tab_home from "/tab_home.svg";
 import { useRecoilState } from "recoil";
 import currentTabState from "~/atoms/currentTabState";
 import { useNavigate } from "@remix-run/react";
+import historyStackState from "~/atoms/historyStackState";
 
 type Props = {
   name?: string;
@@ -11,6 +12,7 @@ type Props = {
 };
 
 export default function Tab({ name, to }: Props) {
+  const [historyStack, setHistoryStack] = useRecoilState(historyStackState);
   const navigate = useNavigate();
   let highlight = false;
 
@@ -20,6 +22,7 @@ export default function Tab({ name, to }: Props) {
   }
 
   const goTab = () => {
+    setHistoryStack(0);
     setCurrentTab(name || "");
     navigate(to || "", { replace: true });
   };

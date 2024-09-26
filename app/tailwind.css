@@ -28,6 +28,14 @@ input {
   border-radius: 4px;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+  box-shadow: 0 0 0 40px white inset !important;
+  background-clip: text;
+}
+
 img, h1 {
   -webkit-user-drag: none;
   user-select: none;
