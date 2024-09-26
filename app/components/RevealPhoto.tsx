@@ -14,6 +14,8 @@ export default function RevealPhoto({ step }: Props) {
   const swiper = useSwiper();
   const [revealStep, setRevealStep] = useRecoilState(revealStepState);
 
+  const imagePreview = useRef<HTMLDivElement>(null);
+
   return (
     <div
       css={css`
@@ -25,6 +27,7 @@ export default function RevealPhoto({ step }: Props) {
       `}
     >
       <div
+        ref={imagePreview}
         css={css`
           position: relative;
           width: calc(100% - 40px);
@@ -33,6 +36,10 @@ export default function RevealPhoto({ step }: Props) {
           border-radius: 10px;
           height: 100%;
           overflow: hidden;
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-position: center;
+          transition-duration: 0.15s;
         `}
       >
         <input
@@ -59,7 +66,35 @@ export default function RevealPhoto({ step }: Props) {
         />
         <input
           type="file"
-          onChange={() => {
+          accept="image/*"
+          onChange={(e) => {
+            const file = e.currentTarget.files;
+            if (file) {
+              const canvas = document.createElement("canvas");
+              const ctx = canvas.getContext("2d");
+              const img = document.createElement("img");
+              img.src = URL.createObjectURL(file[0]);
+              img.onload = () => {
+                const maxPixel = 1024;
+                let ratio = 1;
+                if (img.width > maxPixel) {
+                  ratio = Math.min(ratio, maxPixel / img.width);
+                }
+                if (img.height > maxPixel) {
+                  ratio = Math.min(ratio, maxPixel / img.height);
+                }
+                canvas.width = Math.floor(img.width * ratio);
+                canvas.height = Math.floor(img.height * ratio);
+                ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
+                const bs64dt = canvas.toDataURL("image/jpeg", 0.5);
+                console.log(bs64dt);
+
+                imagePreview.current?.style.setProperty(
+                  "background-image",
+                  `url("${bs64dt}")`,
+                );
+              };
+            }
             setRevealStep((step || 1) + 1);
             swiper.allowSlideNext = true;
             setTimeout(() => {
