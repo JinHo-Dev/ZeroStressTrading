@@ -37,6 +37,8 @@ export async function action({ request }: ActionFunctionArgs) {
     data = {
       tradeName: body.get("tradeName") as string,
       tradeId: body.get("tradeName") as string,
+      minPrice: Number(body.get("minPrice")) as number,
+      currentPrice: Number(body.get("minPrice")) as number,
       createDate: new Date(),
       sellerId: await authenticator.isAuthenticated(request),
     };

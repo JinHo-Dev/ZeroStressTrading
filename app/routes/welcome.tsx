@@ -8,10 +8,8 @@ import { useEffect, useRef, useState } from "react";
 export default function Welcome() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const [step, setStep] = useState(1);
-
   const [isEmailFocused, setIsEmailFocused] = useState(false);
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
   const emailFocused = () => {
     setIsEmailFocused(true);
@@ -20,8 +18,6 @@ export default function Welcome() {
   const emailBlured = (event: React.FocusEvent<HTMLInputElement, Element>) => {
     setIsEmailFocused(false);
   };
-
-  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
   const passwordFocused = () => {
     setIsPasswordFocused(true);

@@ -17,7 +17,7 @@ li {
   padding-left: 20px;
   transition-duration: 0.1s;
   &:hover {
-    background-color: rgba(0, 0, 0, 0.03);
+    background-color: rgba(0, 0, 20, 0.03);
     transition-duration: 0s;
   }
 }
