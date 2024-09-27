@@ -38,3 +38,4 @@ DATABASE_URL = mysql://id:pw@host:port/db
 - Argon2
 - Emotion
 - Recoil
+- Swiper
