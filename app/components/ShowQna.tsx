@@ -47,9 +47,10 @@ export default function ShowQna({
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            justify-content: center;
             & > div > div {
               width: fit-content;
-              max-width: 50%;
+              max-width: 70%;
               height: fit-content;
               padding: 10px;
               border-radius: 16px;
@@ -68,15 +69,11 @@ export default function ShowQna({
           >
             <div
               css={css`
-                position: relative;
-                right: 0;
-                top: 0;
                 background: #efe3ff;
                 text-align: right;
-                word-break:;
               `}
             >
-              {question}
+              <span>{question}</span>
             </div>
           </div>
           <div

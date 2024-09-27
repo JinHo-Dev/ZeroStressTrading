@@ -59,7 +59,7 @@ export default function Trade() {
   const navigate = useNavigate();
 
   const [historyStack, setHistoryStack] = useRecoilState(historyStackState);
-  const [endTime, setEndTime] = useState(Number(new Date()) + 11000000);
+  const [endTime, setEndTime] = useState(Number(new Date()) + 11013000);
   const [currentTime, setCurrentTime] = useState(Number(new Date()));
   const [isOpenBiddingModal, setIsOpenBiddingModal] = useState<boolean | null>(
     null,
@@ -211,7 +211,7 @@ export default function Trade() {
             centeredSlides={true}
             spaceBetween={0}
             slidesPerView={1}
-            autoplay={{ delay: 10000000000 }}
+            autoplay={{ delay: 10000 }}
             allowSlideNext={true}
             allowSlidePrev={true}
             mousewheel={{ enabled: true }}
