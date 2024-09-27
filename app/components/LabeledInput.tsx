@@ -66,6 +66,7 @@ export default function LabeledInput(props: {
                 margin-top: 6px;
                 line-height: 28px;
                 transition-duration: 0.15s;
+                cursor: text;
               `
             : css`
                 position: absolute;
@@ -75,6 +76,7 @@ export default function LabeledInput(props: {
                 margin-top: 0px;
                 line-height: 70px;
                 transition-duration: 0.15s;
+                cursor: text;
               `
         }
       >

@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --swiper-pagination-color: #000;
+}
+
 h1 {
   font-size: 36px;
   font-weight: bold;

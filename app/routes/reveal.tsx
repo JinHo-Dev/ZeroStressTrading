@@ -15,12 +15,12 @@ import NavigationBar from "~/components/NavigationBar";
 import { db } from "~/db.server";
 import { authenticator } from "~/services/auth.server";
 import { EffectCoverflow, EffectCube, Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/effect-cube";
 import RevealPhoto from "~/components/RevealPhoto";
 import RevealName from "~/components/RevealName";
 import revealStepState from "~/atoms/revealStepState";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/effect-cube";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   if (!(await authenticator.isAuthenticated(request))) {
