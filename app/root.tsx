@@ -31,7 +31,7 @@ export default function App() {
           <div
             css={css`
               background-color: #fff;
-              height: 100vh;
+              height: 100%;
               position: fixed;
               width: 100vw;
               overflow: hidden;
