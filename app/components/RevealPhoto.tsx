@@ -23,7 +23,6 @@ export default function RevealPhoto({ step }: Props) {
         width: 100%;
         height: 100%;
         background-color: #fff;
-        z-index: 1;
       `}
     >
       <div
@@ -91,7 +90,7 @@ export default function RevealPhoto({ step }: Props) {
 
                 imagePreview.current?.style.setProperty(
                   "background-image",
-                  `url("${bs64dt}")`,
+                  `url("${bs64dt}")`
                 );
               };
             }

@@ -20,7 +20,6 @@ export default function ShowQna({
         width: 100%;
         height: 100%;
         background-color: #fff;
-        z-index: 1;
       `}
     >
       <div
