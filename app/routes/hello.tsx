@@ -1,6 +1,13 @@
 import { css } from "@emotion/react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { Form, Link } from "@remix-run/react";
+import {
+  Form,
+  Link,
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "@remix-run/react";
 import { useEffect, useRef, useState } from "react";
 import LabeledInput from "~/components/LabeledInput";
 import { authenticator } from "~/services/auth.server";
@@ -8,6 +15,14 @@ import { authenticator } from "~/services/auth.server";
 export default function Hello() {
   const emailInput = useRef<HTMLInputElement>(null);
   const [emailValue, setEmailValue] = useState("");
+  const location = useLocation();
+  const [backto, setBackto] = useState("");
+
+  useEffect(() => {
+    if (location.state?.backto) {
+      setBackto(location.state.backto);
+    }
+  }, [location]);
 
   return (
     <>
@@ -79,6 +94,7 @@ export default function Hello() {
               placeholder="비밀번호"
               state={emailValue.length === 0 ? 0 : 1}
             />
+            <input type="hidden" name="backto" value={backto} />
             <button
               css={css`
                 background: #8638ea;
@@ -102,8 +118,10 @@ export default function Hello() {
 }
 
 export async function action({ request }: ActionFunctionArgs) {
+  const body = await request.clone().formData();
+  console.log(body.get("backto") as string);
   return await authenticator.authenticate("user-pass", request, {
-    successRedirect: "/",
+    successRedirect: (body.get("backto") as string) || "/",
     failureRedirect: "/hello",
   });
 }

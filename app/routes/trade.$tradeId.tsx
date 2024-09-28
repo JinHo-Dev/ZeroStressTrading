@@ -62,7 +62,7 @@ export default function Trade() {
   const [endTime, setEndTime] = useState(Number(new Date()) + 11013000);
   const [currentTime, setCurrentTime] = useState(Number(new Date()));
   const [isOpenBiddingModal, setIsOpenBiddingModal] = useState<boolean | null>(
-    null,
+    null
   );
 
   useEffect(() => {
@@ -218,7 +218,7 @@ export default function Trade() {
             loop={true}
             cubeEffect={{
               shadow: false,
-              slideShadows: true,
+              slideShadows: false,
             }}
             grabCursor={true}
             pagination={{ clickable: true }}
@@ -272,9 +272,10 @@ export default function Trade() {
             <button
               onClick={() => {
                 if (!user) {
-                  navigate({
-                    pathname: "/hello",
-                    search: `?backto=trade/${tradeItem.tradeId}`,
+                  navigate("/hello", {
+                    replace: false,
+                    relative: "path",
+                    state: { backto: `/trade/${tradeItem.tradeId}` },
                   });
                 } else {
                   setIsOpenBiddingModal(true);
