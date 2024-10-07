@@ -1,7 +1,8 @@
 import { css } from "@emotion/react";
-import { ReactNode, useRef } from "react";
+import { ReactNode, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { useSwiper } from "swiper/react";
+import revealImage64State from "~/atoms/revealImage64State";
 import revealStepState from "~/atoms/revealStepState";
 
 type Props = {
@@ -13,8 +14,7 @@ export default function RevealPhoto({ step }: Props) {
   const fileSelector = useRef<HTMLInputElement>(null);
   const swiper = useSwiper();
   const [revealStep, setRevealStep] = useRecoilState(revealStepState);
-
-  const imagePreview = useRef<HTMLDivElement>(null);
+  const [revealImage64, setRevealImage64] = useRecoilState(revealImage64State);
 
   return (
     <div
@@ -23,10 +23,10 @@ export default function RevealPhoto({ step }: Props) {
         width: 100%;
         height: 100%;
         background-color: #fff;
+        z-index: 1;
       `}
     >
       <div
-        ref={imagePreview}
         css={css`
           position: relative;
           width: calc(100% - 40px);
@@ -35,6 +35,7 @@ export default function RevealPhoto({ step }: Props) {
           border-radius: 10px;
           height: 100%;
           overflow: hidden;
+          background-image: url("${revealImage64[(step || 1) - 1]}");
           background-repeat: no-repeat;
           background-size: cover;
           background-position: center;
@@ -86,12 +87,7 @@ export default function RevealPhoto({ step }: Props) {
                 canvas.height = Math.floor(img.height * ratio);
                 ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
                 const bs64dt = canvas.toDataURL("image/jpeg", 0.5);
-                console.log(bs64dt);
-
-                imagePreview.current?.style.setProperty(
-                  "background-image",
-                  `url("${bs64dt}")`
-                );
+                setRevealImage64((prev) => [...prev, bs64dt]);
               };
             }
             setRevealStep((step || 1) + 1);

@@ -41,6 +41,22 @@ export async function action({ request }: ActionFunctionArgs) {
       currentPrice: Number(body.get("minPrice")) as number,
       createDate: new Date(),
       sellerId: await authenticator.isAuthenticated(request),
+      detail: [
+        {
+          type: "qna",
+          question: "질문입니다1",
+          answer: "답변입니다1",
+        },
+        {
+          type: "qna",
+          question: "질문입니다2",
+          answer: "답변입니다2",
+        },
+        {
+          type: "photo",
+          image64: body.get(`image64_${1}`) as string,
+        },
+      ],
     };
 
     // 트레이드 이름 규칙 화이트리스트
@@ -141,12 +157,6 @@ export default function Reveal() {
       >
         <SwiperSlide>
           <RevealPhoto step={1} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <RevealPhoto step={2} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <RevealPhoto step={3} />
         </SwiperSlide>
         <SwiperSlide>
           <RevealName />

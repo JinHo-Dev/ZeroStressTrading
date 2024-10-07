@@ -62,7 +62,7 @@ export default function Trade() {
   const [endTime, setEndTime] = useState(Number(new Date()) + 11013000);
   const [currentTime, setCurrentTime] = useState(Number(new Date()));
   const [isOpenBiddingModal, setIsOpenBiddingModal] = useState<boolean | null>(
-    null
+    null,
   );
 
   useEffect(() => {
@@ -231,35 +231,32 @@ export default function Trade() {
               overflow: hidden !important;
             `}
           >
-            <SwiperSlide>
-              <ShowQna
-                question={`
-                  제품에 고장이 있나요?
-                `}
-                answer={`
-                  홈버튼이 작동하지 않는 제품입니다. 
-                `}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <ShowQna
-                question={`
-                  유리나 본체 등 외관에 손상이 있나요?
-                `}
-                answer={`
-                  경미한 생활 기스가 있습니다.
-                `}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <ShowPhoto />
-            </SwiperSlide>
-            <SwiperSlide>
-              <ShowPhoto />
-            </SwiperSlide>
-            <SwiperSlide>
-              <ShowPhoto />
-            </SwiperSlide>
+            {(
+              tradeItem?.detail as {
+                type: string;
+                field: { sender: string; message: string }[];
+              }[]
+            )?.map((obj: any, idx: number) => {
+              if (obj.type === "qna") {
+                return (
+                  <SwiperSlide>
+                    <ShowQna
+                      question={obj.question}
+                      answer={obj.answer}
+                      key={idx}
+                    />
+                  </SwiperSlide>
+                );
+              }
+              if (obj.type === "photo") {
+                return (
+                  <SwiperSlide>
+                    <ShowPhoto image64={obj.image64} />
+                  </SwiperSlide>
+                );
+              }
+              return <></>;
+            })}
           </Swiper>
         </div>
         {tradeItem.sellerId !== user && (

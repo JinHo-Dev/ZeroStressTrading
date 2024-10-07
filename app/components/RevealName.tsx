@@ -2,10 +2,13 @@ import { css } from "@emotion/react";
 import { Form } from "@remix-run/react";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import LabeledInput from "./LabeledInput";
+import revealImage64State from "~/atoms/revealImage64State";
+import { useRecoilState } from "recoil";
 
 export default function RevealName() {
   const [tradeName, setTradeName] = useState("");
   const [minPrice, setMinPrice] = useState(0);
+  const [revealImage64, setRevealImage64] = useRecoilState(revealImage64State);
 
   return (
     <>
@@ -49,7 +52,9 @@ export default function RevealName() {
               }}
               state={tradeName.length === 0 ? 0 : 1}
             />
+            <input type="hidden" name="image64_1" value={revealImage64[0]} />
             <button
+              type="submit"
               css={css`
                 background: #8638ea;
                 bottom: 10px;
