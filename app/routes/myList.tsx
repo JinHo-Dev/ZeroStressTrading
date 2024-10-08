@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
-import { json, LoaderFunctionArgs } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { json, LoaderFunctionArgs, redirect } from "@remix-run/node";
+import { Link, useLoaderData } from "@remix-run/react";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import historyStackState from "~/atoms/historyStackState";
@@ -9,19 +9,26 @@ import BiddingItem from "~/interfaces/biddingItem";
 import { authenticator } from "~/services/auth.server";
 
 export async function loader({ params, request }: LoaderFunctionArgs) {
+  if (!(await authenticator.isAuthenticated(request))) {
+    return redirect("../hello?backto=../myList");
+  }
+
   const biddingList = await db.biddings.findMany({
     where: {
       userId: await authenticator.isAuthenticated(request),
     },
   });
 
+  let user = await authenticator.isAuthenticated(request);
+
   return json({
     biddingList,
+    user,
   });
 }
 
 export default function MyList() {
-  const { biddingList } = useLoaderData<typeof loader>();
+  const { biddingList, user } = useLoaderData<typeof loader>();
   const [historyStack, setHistoryStack] = useRecoilState(historyStackState);
   useEffect(() => {
     setHistoryStack(historyStack + 1);
@@ -39,7 +46,8 @@ export default function MyList() {
           flex-direction: column;
         `}
       >
-        <div
+        <Link
+          to="/bye"
           css={css`
             background-color: rgba(0, 0, 20, 0.05);
             flex: 100px 0 0;
@@ -91,7 +99,7 @@ export default function MyList() {
                 line-height: 8px;
               `}
             >
-              email@domain.name
+              {user}
             </span>
             <span
               css={css`
@@ -104,10 +112,10 @@ export default function MyList() {
                 line-height: 16px;
               `}
             >
-              내 프로필 편집하기
+              로그아웃하려면 누르세요
             </span>
           </div>
-        </div>
+        </Link>
         <h1>Trade List</h1>
         {isAvailable ? (
           <ul>

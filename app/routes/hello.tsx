@@ -17,9 +17,12 @@ export default function Hello() {
   const [emailValue, setEmailValue] = useState("");
   const location = useLocation();
   const [backto, setBackto] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    if (location.state?.backto) {
+    if (searchParams.get("backto")) {
+      setBackto(searchParams.get("backto") as string);
+    } else if (location.state?.backto) {
       setBackto(location.state.backto);
     }
   }, [location]);
@@ -119,7 +122,6 @@ export default function Hello() {
 
 export async function action({ request }: ActionFunctionArgs) {
   const body = await request.clone().formData();
-  console.log(body.get("backto") as string);
   return await authenticator.authenticate("user-pass", request, {
     successRedirect: (body.get("backto") as string) || "/",
     failureRedirect: "/hello",

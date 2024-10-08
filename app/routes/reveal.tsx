@@ -5,7 +5,7 @@ import {
   LoaderFunctionArgs,
   redirect,
 } from "@remix-run/node";
-import { Form, json } from "@remix-run/react";
+import { Form, json, useNavigate } from "@remix-run/react";
 import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
@@ -24,7 +24,7 @@ import "swiper/css/effect-cube";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   if (!(await authenticator.isAuthenticated(request))) {
-    return redirect("../hello");
+    return redirect("../hello?backto=../reveal");
   }
   return json({});
 }
@@ -40,6 +40,7 @@ export async function action({ request }: ActionFunctionArgs) {
       minPrice: Number(body.get("minPrice")) as number,
       currentPrice: Number(body.get("minPrice")) as number,
       createDate: new Date(),
+      dueDate: new Date(Number(new Date()) + 3 * 24 * 60 * 60 * 1000),
       sellerId: await authenticator.isAuthenticated(request),
       detail: [
         {
