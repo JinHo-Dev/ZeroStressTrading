@@ -13,11 +13,6 @@ export default function ShowPhoto({ image64 }: { image64?: string }) {
         width: 100%;
         height: 100%;
         background-color: #fff;
-        background-image: url("${image64}");
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
-        transition-duration: 0.15s;
       `}
     >
       <div
@@ -29,6 +24,7 @@ export default function ShowPhoto({ image64 }: { image64?: string }) {
           border-radius: 10px;
           height: 100%;
           overflow: hidden;
+          background-image: url("${image64}");
           background-repeat: no-repeat;
           background-size: cover;
           background-position: center;
