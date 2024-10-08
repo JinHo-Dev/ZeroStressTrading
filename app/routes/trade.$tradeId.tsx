@@ -26,27 +26,49 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     },
   });
 
+  const biddingList = await db.biddings.findMany({
+    where: {
+      tradeId: params.tradeId,
+    },
+    orderBy: [{ biddingPrice: "desc" }],
+  });
+
   let user = await authenticator.isAuthenticated(request);
 
   return json({
     tradeItem,
+    biddingList,
     user,
   });
 }
 
 export async function action({ request }: ActionFunctionArgs) {
   const body = await request.formData();
-  let data: Prisma.biddingsCreateInput;
+
+  let biddingData: Prisma.biddingsCreateInput;
+  let tradeData: Prisma.tradesUpdateInput;
 
   if (request.method === "POST") {
-    data = {
+    biddingData = {
+      userId: await authenticator.isAuthenticated(request),
       biddingPrice: Number(body.get("biddingPrice") as string),
-      tradeId: body.get("tradeName") as string,
+      tradeId: body.get("tradeId") as string,
       biddingDate: new Date(),
     };
 
+    tradeData = {
+      currentPrice: Number(body.get("biddingPrice") as string),
+    };
+
     await db.biddings.create({
-      data: data,
+      data: biddingData,
+    });
+
+    await db.trades.update({
+      where: {
+        tradeId: body.get("tradeId") as string,
+      },
+      data: tradeData,
     });
 
     return redirect(".");
@@ -54,16 +76,17 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export default function Trade() {
-  const { tradeItem, user } = useLoaderData<typeof loader>();
+  const { tradeItem, biddingList, user } = useLoaderData<typeof loader>();
 
   const navigate = useNavigate();
 
   const [historyStack, setHistoryStack] = useRecoilState(historyStackState);
-  const [endTime, setEndTime] = useState(Number(new Date()) + 11013000);
   const [currentTime, setCurrentTime] = useState(Number(new Date()));
   const [isOpenBiddingModal, setIsOpenBiddingModal] = useState<boolean | null>(
     null,
   );
+
+  const endTime = Number(new Date(tradeItem?.dueDate as string));
 
   useEffect(() => {
     setHistoryStack(historyStack + 1);
@@ -239,18 +262,14 @@ export default function Trade() {
             )?.map((obj: any, idx: number) => {
               if (obj.type === "qna") {
                 return (
-                  <SwiperSlide>
-                    <ShowQna
-                      question={obj.question}
-                      answer={obj.answer}
-                      key={idx}
-                    />
+                  <SwiperSlide key={idx}>
+                    <ShowQna question={obj.question} answer={obj.answer} />
                   </SwiperSlide>
                 );
               }
               if (obj.type === "photo") {
                 return (
-                  <SwiperSlide>
+                  <SwiperSlide key={idx}>
                     <ShowPhoto image64={obj.image64} />
                   </SwiperSlide>
                 );
@@ -274,12 +293,19 @@ export default function Trade() {
                     relative: "path",
                     state: { backto: `/trade/${tradeItem.tradeId}` },
                   });
+                } else if (biddingList[0]?.userId === user) {
+                  return;
                 } else {
                   setIsOpenBiddingModal(true);
                 }
               }}
               css={css`
-                background: #8638ea;
+                background: ${biddingList[0]?.userId === user
+                  ? "rgba(0, 0, 20, 0.24)"
+                  : "#8638ea"};
+                cursor: ${biddingList[0]?.userId === user
+                  ? "default"
+                  : "pointer"};
                 bottom: 10px;
                 margin: 0 20px;
                 width: calc(100% - 40px);
@@ -290,7 +316,9 @@ export default function Trade() {
                 font-size: 17px;
               `}
             >
-              입찰하기
+              {biddingList[0]?.userId === user
+                ? `${biddingList[0]?.biddingPrice}원에 입찰함`
+                : "입찰하기"}
             </button>
           </div>
         )}
@@ -369,6 +397,9 @@ export default function Trade() {
                   font-weight: bold;
                   font-size: 17px;
                 `}
+                onClick={() => {
+                  setIsOpenBiddingModal(false);
+                }}
               >
                 입찰하기
               </button>
