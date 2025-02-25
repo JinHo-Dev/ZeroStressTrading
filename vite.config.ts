@@ -2,6 +2,9 @@ import { vitePlugin as remix } from "@remix-run/dev";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
+// for deploying to netlify.com
+import { netlifyPlugin } from "@netlify/remix-adapter/plugin";
+
 export default defineConfig({
   plugins: [
     remix({
@@ -12,5 +15,6 @@ export default defineConfig({
       },
     }),
     tsconfigPaths(),
+    netlifyPlugin(), // for deplooying to netlify.com
   ],
 });
