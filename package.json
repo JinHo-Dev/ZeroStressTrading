@@ -14,6 +14,9 @@
     "deploy-test": "prisma generate && remix vite:build"
   },
   "dependencies": {
+    "@netlify/remix-adapter": "^2.6.0",
+    "@netlify/remix-edge-adapter": "^3.4.2",
+    "@netlify/remix-runtime": "^2.3.1",
     "@emotion/react": "~11.13.3",
     "@prisma/client": "~5.19.1",
     "@remix-run/node": "~2.12.1",
@@ -30,9 +33,6 @@
     "swiper": "~11.1.14"
   },
   "devDependencies": {
-    "@netlify/remix-adapter": "^2.6.0",
-    "@netlify/remix-edge-adapter": "^3.4.2",
-    "@netlify/remix-runtime": "^2.3.1",
     "@remix-run/dev": "~2.12.1",
     "@types/jest": "~29.5.13",
     "@types/node": "~22.5.5",
