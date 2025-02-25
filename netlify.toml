@@ -1,7 +1,0 @@
-[build]
-  command = "npm run deploy-test"
-  publish = "build/client"
-
-[dev]
-  command = "npm run dev"
-  framework = "vite"
