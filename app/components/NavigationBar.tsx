@@ -22,19 +22,22 @@ export default function NavigationBar({ children }: Props) {
   }, []);
 
   const openMenu = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    if (event.target === event.currentTarget) {
-      setIsMenuOpen(true);
-    }
+    setIsMenuOpen(true);
   };
 
   return (
     <>
       <div
         css={css`
-          flex: 60px 0 0;
+          padding: 0 11px;
+          background-color: rgba(255, 255, 255, 0);
+          backdrop-filter: blur(32px);
+          width: 100%;
+          height: 84px;
+          z-index: 2;
+          position: fixed;
           display: flex;
-          line-height: 60px;
-          font-size: 18px;
+          flex: 84px 0 0;
           -webkit-user-drag: none;
           user-select: none;
           -moz-user-select: none;
@@ -46,7 +49,11 @@ export default function NavigationBar({ children }: Props) {
         `}
       >
         {historyStack > 1 ? (
-          <div>
+          <div
+            css={css`
+              flex: 62px 0 0;
+            `}
+          >
             <img
               src={back}
               onClick={() => {
@@ -61,20 +68,62 @@ export default function NavigationBar({ children }: Props) {
             />
           </div>
         ) : (
-          <div></div>
+          <></>
         )}
-        <div>{children}</div>
-        <div>
-          <img
-            alt="open Menu"
-            onClick={openMenu}
-            src={menu}
+        <div
+          css={css`
+            line-height: 84px;
+            font-size: 39px;
+            font-weight: bold;
+            margin-left: 11px;
+          `}
+        >
+          {children}
+        </div>
+        <div
+          css={css`
+            padding: 21px 11px;
+            flex: 64px 0 0;
+            display: flex;
+            cursor: pointer;
+          `}
+          onClick={openMenu}
+        >
+          <div
             css={css`
-              padding: 18px;
-              cursor: pointer;
-              float: right;
+              flex: 1;
+              border-radius: 14px;
+              background-color: #fff;
+              background-image: url(${menu});
+              background-repeat: no-repeat;
+              background-position: center center;
+              background-size: 17px 17px;
+              border: solid 1px #e5e5ed;
             `}
-          />
+          ></div>
+        </div>
+
+        <div
+          css={css`
+            padding: 21px 11px;
+            flex: 0 0 64px;
+            display: flex;
+            cursor: pointer;
+          `}
+          onClick={openMenu}
+        >
+          <div
+            css={css`
+              flex: 1;
+              border-radius: 14px;
+              background-color: #fff;
+              background-image: url(${menu});
+              background-repeat: no-repeat;
+              background-position: center center;
+              background-size: 17px 17px;
+              border: solid 1px #e5e5ed;
+            `}
+          ></div>
         </div>
       </div>
     </>

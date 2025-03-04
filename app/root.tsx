@@ -24,33 +24,18 @@ export default function App() {
           <Links />
           <Scripts />
         </head>
-        <body
-          css={css`
-            background-color: rgba(0, 0, 20, 0.04);
-          `}
-        >
+        <body>
           <div
             css={css`
               background-color: #fff;
-              height: 100%;
-              position: fixed;
+              height: 100vh;
+              position: absolute;
               width: 100vw;
               overflow: hidden;
               display: flex;
               flex-direction: column;
-              @media (min-width: 500px) {
-                left: 50%;
-                top: 20px;
-                width: 400px;
-                margin-left: -200px;
-                height: calc(100vh - 40px);
-                border: solid 1px rgba(0, 0, 20, 0.12);
-                border-radius: 12px;
-                box-shadow: 0px 8px 60px rgba(0, 0, 20, 0.08);
-              }
             `}
           >
-            <NavigationBar />
             <div
               css={css`
                 overflow: auto;

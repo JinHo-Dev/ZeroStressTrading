@@ -4,6 +4,7 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import historyStackState from "~/atoms/historyStackState";
+import NavigationBar from "~/components/NavigationBar";
 import { db } from "~/db.server";
 import BiddingItem from "~/interfaces/biddingItem";
 import { authenticator } from "~/services/auth.server";
@@ -40,82 +41,117 @@ export default function MyList() {
     <>
       <div
         css={css`
+          height: 84px;
+          background-color: #e5e5ed;
+        `}
+      >
+        <NavigationBar>My List</NavigationBar>
+      </div>
+      <div
+        css={css`
           width: 100%;
           height: 100%;
           display: flex;
           flex-direction: column;
+          background-color: #e5e5ed;
         `}
       >
-        <Link
-          to="/bye"
+        <div
           css={css`
-            background-color: rgba(0, 0, 20, 0.05);
-            flex: 100px 0 0;
-            border-radius: 10px;
-            padding: 10px;
-            margin: 20px;
+            background-color: #fff;
+            flex: 160px 0 0;
+            border-radius: 14px;
+            padding: 22px 22px 11px 22px;
+            margin: 0 22px;
             display: flex;
-            cursor: pointer;
+            flex-direction: column;
           `}
         >
           <div
             css={css`
-              background-color: rgba(0, 0, 20, 0.12);
-              flex: 80px 0 0;
-              margin-left: 10px;
-              border-radius: 100%;
+              flex: 70px 0 0;
+              display: flex;
             `}
-          ></div>
+          >
+            <div
+              css={css`
+                background-color: rgba(0, 0, 20, 0.12);
+                flex: 70px 0 0;
+                margin-left: 0px;
+                border-radius: 100%;
+              `}
+            ></div>
+            <div
+              css={css`
+                flex: 1;
+                margin-left: 10px;
+                display: flex;
+                flex-direction: column;
+              `}
+            >
+              <span
+                css={css`
+                  flex: 1;
+                  margin-left: 10px;
+                  display: flex;
+                  flex-direction: column;
+                  font-size: 21px;
+                  color: #000010;
+                  line-height: 42px;
+                  font-weight: bold;
+                `}
+              >
+                User 999
+              </span>
+              <span
+                css={css`
+                  flex: 1;
+                  margin-left: 10px;
+                  display: flex;
+                  flex-direction: column;
+                  font-size: 16px;
+                  color: #78787d;
+                  line-height: 8px;
+                `}
+              >
+                {user}
+              </span>
+            </div>
+          </div>
           <div
             css={css`
               flex: 1;
-              margin-left: 10px;
               display: flex;
-              flex-direction: column;
+              justify-content: space-between;
+              padding-top: 15px;
             `}
           >
-            <span
+            <div
               css={css`
-                flex: 1;
-                margin-left: 10px;
-                display: flex;
-                flex-direction: column;
-                font-size: 20px;
-                color: rgba(0, 0, 20, 1);
-                line-height: 38px;
-                font-weight: bold;
+                flex: 30% 0 0;
+                background: #e5e5ed;
+                border-radius: 14px;
+                cursor: pointer;
               `}
-            >
-              이름
-            </span>
-            <span
+            ></div>
+            <div
               css={css`
-                flex: 1;
-                margin-left: 10px;
-                display: flex;
-                flex-direction: column;
-                font-size: 15px;
-                color: rgba(0, 0, 20, 0.8);
-                line-height: 8px;
+                flex: 30% 0 0;
+                background: #e5e5ed;
+                border-radius: 14px;
+                cursor: pointer;
               `}
-            >
-              {user}
-            </span>
-            <span
+            ></div>
+            <div
               css={css`
-                flex: 1;
-                margin-left: 10px;
-                display: flex;
-                flex-direction: column;
-                font-size: 13px;
-                color: rgba(0, 0, 20, 0.6);
-                line-height: 16px;
+                flex: 30% 0 0;
+                background: #e5e5ed;
+                border-radius: 14px;
+                cursor: pointer;
               `}
-            >
-              로그아웃하려면 누르세요
-            </span>
+            ></div>
           </div>
-        </Link>
+        </div>
         <h1>Trade List</h1>
         {isAvailable ? (
           <ul>
