@@ -31,7 +31,7 @@ export default function RevealPhoto({ step }: Props) {
           position: relative;
           width: calc(100% - 40px);
           margin: 0 20px;
-          background-color: rgba(0, 0, 20, 0.1);
+          background-color: #e5e5ed;
           border-radius: 10px;
           height: 100%;
           overflow: hidden;

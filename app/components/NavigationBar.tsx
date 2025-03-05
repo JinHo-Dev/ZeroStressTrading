@@ -2,6 +2,8 @@ import { css } from "@emotion/react";
 import { useNavigate } from "@remix-run/react";
 import { ReactNode, useEffect } from "react";
 import menu from "/menu.svg";
+import bell from "/bell.svg";
+import search from "/search.svg";
 import back from "/back.svg";
 import { useRecoilState } from "recoil";
 import menuOpenState from "~/atoms/menuOpenState";
@@ -51,7 +53,7 @@ export default function NavigationBar({ children }: Props) {
         {historyStack > 1 ? (
           <div
             css={css`
-              flex: 62px 0 0;
+              flex: 48px 0 0;
             `}
           >
             <img
@@ -61,9 +63,10 @@ export default function NavigationBar({ children }: Props) {
                 navigate(-1);
               }}
               css={css`
-                padding: 18px;
+                padding: 0 0 0 18px;
                 cursor: pointer;
                 float: left;
+                height: 100%;
               `}
             />
           </div>
@@ -76,6 +79,7 @@ export default function NavigationBar({ children }: Props) {
             font-size: 39px;
             font-weight: bold;
             margin-left: 11px;
+            color: #110c18;
           `}
         >
           {children}
@@ -94,10 +98,10 @@ export default function NavigationBar({ children }: Props) {
               flex: 1;
               border-radius: 14px;
               background-color: #fff;
-              background-image: url(${menu});
+              background-image: url(${search});
               background-repeat: no-repeat;
-              background-position: center center;
-              background-size: 17px 17px;
+              background-position: 48% 48%;
+              background-size: 22px 22px;
               border: solid 1px #e5e5ed;
             `}
           ></div>
@@ -117,10 +121,10 @@ export default function NavigationBar({ children }: Props) {
               flex: 1;
               border-radius: 14px;
               background-color: #fff;
-              background-image: url(${menu});
+              background-image: url(${bell});
               background-repeat: no-repeat;
-              background-position: center center;
-              background-size: 17px 17px;
+              background-position: 54% 48%;
+              background-size: 22px 22px;
               border: solid 1px #e5e5ed;
             `}
           ></div>
