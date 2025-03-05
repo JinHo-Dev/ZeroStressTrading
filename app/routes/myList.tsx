@@ -3,11 +3,15 @@ import { json, LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
+import currentTabState from "~/atoms/currentTabState";
 import historyStackState from "~/atoms/historyStackState";
 import NavigationBar from "~/components/NavigationBar";
 import { db } from "~/db.server";
 import BiddingItem from "~/interfaces/biddingItem";
 import { authenticator } from "~/services/auth.server";
+import menu from "/menu.svg";
+import setting from "/setting.svg";
+import logout from "/logout.svg";
 
 export async function loader({ params, request }: LoaderFunctionArgs) {
   if (!(await authenticator.isAuthenticated(request))) {
@@ -31,35 +35,52 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
 export default function MyList() {
   const { biddingList, user } = useLoaderData<typeof loader>();
   const [historyStack, setHistoryStack] = useRecoilState(historyStackState);
+  const [currentTab, setCurrentTab] = useRecoilState(currentTabState);
+
   useEffect(() => {
     setHistoryStack(historyStack + 1);
+    setCurrentTab("MyList");
   }, []);
 
-  const isAvailable = true || (biddingList && biddingList.length > 0);
+  const isAvailable = biddingList && biddingList.length > 0;
 
   return (
-    <>
+    <div
+      css={css`
+        height: 100%;
+        width: 100%;
+        background-color: #e5e5ed;
+        overflow-y: auto;
+      `}
+    >
       <div
         css={css`
           height: 84px;
-          background-color: #e5e5ed;
         `}
       >
-        <NavigationBar>My List</NavigationBar>
+        <NavigationBar>
+          My
+          <span
+            css={css`
+              color: #7c3de1;
+              margin: 0 2px;
+              font-weight: 800;
+            `}
+          >
+            :
+          </span>
+          List
+        </NavigationBar>
       </div>
       <div
         css={css`
           width: 100%;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          background-color: #e5e5ed;
         `}
       >
         <div
           css={css`
             background-color: #fff;
-            flex: 160px 0 0;
+            height: 160px;
             border-radius: 14px;
             padding: 22px 22px 11px 22px;
             margin: 0 22px;
@@ -75,7 +96,7 @@ export default function MyList() {
           >
             <div
               css={css`
-                background-color: rgba(0, 0, 20, 0.12);
+                background-color: #c7c7ce;
                 flex: 70px 0 0;
                 margin-left: 0px;
                 border-radius: 100%;
@@ -122,53 +143,133 @@ export default function MyList() {
             css={css`
               flex: 1;
               display: flex;
-              justify-content: space-between;
+              justify-content: space-around;
               padding-top: 15px;
             `}
           >
             <div
               css={css`
-                flex: 30% 0 0;
+                flex: 110px 0 0;
                 background: #e5e5ed;
                 border-radius: 14px;
                 cursor: pointer;
+                display: flex;
+                align-items: center;
+                font-size: 18px;
               `}
-            ></div>
+            >
+              <div
+                css={css`
+                  height: 100%;
+                  flex: 36px 0 0;
+                  margin-left: 4px;
+                  background-image: url(${menu});
+                  background-repeat: no-repeat;
+                  background-position: center center;
+                  background-size: 17px 17px;
+                `}
+              ></div>
+              History
+            </div>
             <div
               css={css`
-                flex: 30% 0 0;
+                flex: 110px 0 0;
                 background: #e5e5ed;
                 border-radius: 14px;
                 cursor: pointer;
+                display: flex;
+                align-items: center;
+                font-size: 18px;
               `}
-            ></div>
-            <div
+            >
+              <div
+                css={css`
+                  height: 100%;
+                  flex: 36px 0 0;
+                  margin-left: 4px;
+                  background-image: url(${setting});
+                  background-repeat: no-repeat;
+                  background-position: center center;
+                  background-size: 22px 22px;
+                `}
+              ></div>
+              Setting
+            </div>
+            <Link
               css={css`
-                flex: 30% 0 0;
+                flex: 110px 0 0;
                 background: #e5e5ed;
                 border-radius: 14px;
                 cursor: pointer;
+                display: flex;
+                align-items: center;
+                font-size: 18px;
               `}
-            ></div>
+              to="/bye"
+            >
+              <div
+                css={css`
+                  height: 100%;
+                  flex: 36px 0 0;
+                  margin-left: 4px;
+                  background-image: url(${logout});
+                  background-repeat: no-repeat;
+                  background-position: center center;
+                  background-size: 22px 22px;
+                `}
+              ></div>
+              Logout
+            </Link>
           </div>
         </div>
-        <h1>Trade List</h1>
-        {isAvailable ? (
-          <ul>
-            {biddingList.map((item: BiddingItem, index: number) => (
-              <li key={index}>
-                {item.tradeId}
-                {item.biddingPrice}
-                {item.biddingDate}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <ul>
-            <li>No item</li>
-          </ul>
-        )}
+        <div
+          css={css`
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+          `}
+        >
+          {isAvailable && (
+            <>
+              <h1
+                css={css`
+                  flex: 30px;
+                  margin: 44px 22px 0 22px;
+                  font-size: 21px;
+                `}
+              >
+                Buying
+                <div
+                  css={css`
+                    width: 31px;
+                    height: 22px;
+                    background-color: #da7060;
+                    color: #fff;
+                    font-size: 15px;
+                    display: inline-block;
+                    margin-left: 6px;
+                    border-radius: 100px;
+                    vertical-align: middle;
+                    text-align: center;
+                    line-height: 22px;
+                  `}
+                >
+                  {isAvailable}
+                </div>
+              </h1>
+              <ul>
+                {biddingList.map((item: BiddingItem, index: number) => (
+                  <li key={index}>
+                    {item.tradeId}
+                    {item.biddingPrice}
+                    {item.biddingDate}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </div>
       </div>
-    </>
+    </div>
   );
 }

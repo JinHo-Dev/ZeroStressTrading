@@ -8,10 +8,12 @@ import {
   useLoaderData,
   useNavigate,
 } from "@remix-run/react";
+import { setServers } from "dns";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { EffectCube, Pagination, Mousewheel, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import currentTabState from "~/atoms/currentTabState";
 import historyStackState from "~/atoms/historyStackState";
 import LabeledInput from "~/components/LabeledInput";
 import ShowPhoto from "~/components/ShowPhoto";
@@ -81,15 +83,18 @@ export default function Trade() {
   const navigate = useNavigate();
 
   const [historyStack, setHistoryStack] = useRecoilState(historyStackState);
+  const [currentTab, setCurrentTab] = useRecoilState(currentTabState);
+
   const [currentTime, setCurrentTime] = useState(Number(new Date()));
   const [isOpenBiddingModal, setIsOpenBiddingModal] = useState<boolean | null>(
-    null,
+    null
   );
 
   const endTime = Number(new Date(tradeItem?.dueDate as string));
 
   useEffect(() => {
     setHistoryStack(historyStack + 1);
+    setCurrentTab("Buy");
   }, []);
 
   useEffect(() => {

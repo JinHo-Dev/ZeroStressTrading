@@ -7,6 +7,8 @@ import NavigationBar from "~/components/NavigationBar";
 import { useRecoilState } from "recoil";
 import { useEffect } from "react";
 import historyStackState from "~/atoms/historyStackState";
+import currentTabState from "~/atoms/currentTabState";
+import { css } from "@emotion/react";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const tradeList = await db.trades.findMany();
@@ -20,24 +22,49 @@ export default function Trade() {
   const { tradeList } = useLoaderData<typeof loader>();
 
   const [historyStack, setHistoryStack] = useRecoilState(historyStackState);
+  const [currentTab, setCurrentTab] = useRecoilState(currentTabState);
   useEffect(() => {
     setHistoryStack(historyStack + 1);
+    setCurrentTab("Buy");
   }, []);
 
   const isAvailable = tradeList && tradeList.length > 0;
 
   return (
     <>
-      <h1>Trade List</h1>
-      {isAvailable ? (
-        <ul>
-          {tradeList.map((item: TradeItem, index: number) => (
-            <TradeListItem tradeItem={item} key={item.tradeId} />
-          ))}
-        </ul>
-      ) : (
-        <li>No item</li>
-      )}
+      <div
+        css={css`
+          height: 84px;
+        `}
+      >
+        <NavigationBar>
+          Buy
+          <span
+            css={css`
+              color: #7c3de1;
+              margin: 0 2px;
+              font-weight: 800;
+            `}
+          >
+            :
+          </span>
+        </NavigationBar>
+      </div>
+      <div
+        css={css`
+          width: 100%;
+        `}
+      >
+        {isAvailable ? (
+          <ul>
+            {tradeList.map((item: TradeItem, index: number) => (
+              <TradeListItem tradeItem={item} key={item.tradeId} />
+            ))}
+          </ul>
+        ) : (
+          <li>No item</li>
+        )}
+      </div>
     </>
   );
 }

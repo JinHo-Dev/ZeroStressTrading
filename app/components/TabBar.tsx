@@ -1,14 +1,18 @@
 import { css } from "@emotion/react";
 import Tab from "./Tab";
+import { useRecoilState } from "recoil";
+import currentTabState from "~/atoms/currentTabState";
 
 export default function TabBar() {
+  const [currentTab, setCurrentTab] = useRecoilState(currentTabState);
+
   return (
     <>
       <div
         css={css`
           flex: 70px 0 0;
           height: 70px;
-          background: #fff;
+          background: ${currentTab === "MyList" ? "#e5e7eb" : "#fff"};
           display: flex;
           flex-direction: row;
           -webkit-user-drag: none;

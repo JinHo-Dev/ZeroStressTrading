@@ -3,13 +3,14 @@ import type { MetaFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { EffectCube, Pagination } from "swiper/modules";
+import { Autoplay, EffectCube, Mousewheel, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import historyStackState from "~/atoms/historyStackState";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-cube";
 import NavigationBar from "~/components/NavigationBar";
+import currentTabState from "~/atoms/currentTabState";
 
 export const meta: MetaFunction = () => {
   return [
@@ -23,20 +24,35 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   const [historyStack, setHistoryStack] = useRecoilState(historyStackState);
+  const [currentTab, setCurrentTab] = useRecoilState(currentTabState);
   useEffect(() => {
     setHistoryStack(historyStack + 1);
+    setCurrentTab("Home");
   }, []);
 
   return (
     <>
-      <NavigationBar>Re:store</NavigationBar>
+      <NavigationBar>
+        Re
+        <span
+          css={css`
+            color: #7c3de1;
+            margin: 0 2px;
+            font-weight: 800;
+          `}
+        >
+          :
+        </span>
+        store
+      </NavigationBar>
       <Swiper
-        modules={[Pagination, EffectCube]}
+        modules={[Pagination, EffectCube, Autoplay]}
         effect={"cube"}
         centeredSlides={true}
         spaceBetween={0}
         loop={true}
         slidesPerView={1}
+        autoplay={{ delay: 2500 }}
         allowSlideNext={true}
         allowSlidePrev={true}
         cubeEffect={{

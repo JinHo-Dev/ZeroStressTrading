@@ -21,6 +21,7 @@ import revealStepState from "~/atoms/revealStepState";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-cube";
+import currentTabState from "~/atoms/currentTabState";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   if (!(await authenticator.isAuthenticated(request))) {
@@ -63,7 +64,7 @@ export async function action({ request }: ActionFunctionArgs) {
     // 트레이드 이름 규칙 화이트리스트
     data.tradeName = data.tradeName?.replaceAll(
       /[^0-9a-zA-Zㄱ-ㅎ가-힣 ()~#\^+*,._\-]/gi,
-      "",
+      ""
     );
 
     // tradeId 띄어쓰기 제거
@@ -108,8 +109,11 @@ export default function Reveal() {
   }, []);
 
   const [historyStack, setHistoryStack] = useRecoilState(historyStackState);
+  const [currentTab, setCurrentTab] = useRecoilState(currentTabState);
+
   useEffect(() => {
     setHistoryStack(historyStack + 1);
+    setCurrentTab("Sell");
   }, []);
 
   const fileSelector = useRef<HTMLInputElement>(null);
@@ -133,7 +137,13 @@ export default function Reveal() {
   `;
 
   return (
-    <>
+    <div
+      css={css`
+        width: 100%;
+        height: 100%;
+        padding-top: 20px;
+      `}
+    >
       <Swiper
         modules={[Pagination, EffectCube]}
         effect={"cube"}
@@ -163,6 +173,6 @@ export default function Reveal() {
           <RevealName />
         </SwiperSlide>
       </Swiper>
-    </>
+    </div>
   );
 }
